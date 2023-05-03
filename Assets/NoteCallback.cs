@@ -43,11 +43,4 @@ sealed class NoteCallback : MonoBehaviour
             };
         };
     }
-    void Update()
-    {
-        if (Input.GetButtonDown("Jump"))
-        {
-            Debug.Log("Jump button pressed.");
-        }
-    }
 }
