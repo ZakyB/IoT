@@ -17,22 +17,39 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        int xZone = 0;
+        
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            xZone = 3;
+        }
+        else if (Input.GetKeyDown(KeyCode.K))
+        {
+            xZone = 5;
+        }
+        else if (Input.GetKeyDown(KeyCode.L))
+        {
+            xZone = 7;
+        }
+        
+        if (xZone != 0)
         {
             animator.SetTrigger("Shot");
-            // détecte si une cible est présente dans la zone de tir
-            GameObject target = GetTargetInShootZone();
+            // Détecte si une cible est présente dans la zone de tir correspondante
+            GameObject target = GetTargetInShootZone(xZone);
             if (target != null)
             {
-                // détruit le GameObject Target
+                // Détruit le GameObject Target
                 Destroy(target);
             }
+            xZone = 0;
         }
+        
         scoreText.text = "Score: " + score.ToString();
         scoreText.text += "\nMultiplicateur: " + chainBoost.ToString();
     }
 
-    GameObject GetTargetInShootZone()
+    GameObject GetTargetInShootZone(int xZone)
     {
         // recherche tous les GameObjects ayant le tag "Target"
         GameObject[] targets = GameObject.FindGameObjectsWithTag("Target");
@@ -41,14 +58,14 @@ public class PlayerController : MonoBehaviour
         foreach (GameObject target in targets)
         {
             Vector3 targetPosition = target.transform.position;
-            if (targetPosition.y >= sweetZoneMin && targetPosition.y <= sweetZoneMax)
+            if (targetPosition.y >= sweetZoneMin && targetPosition.y <= sweetZoneMax && targetPosition.x == xZone)
             {
                 score += 30*chainBoost;
                 if(chainBoost<5){
                     chainBoost++;
                 }
                 return target;
-            } else if (targetPosition.y >= shootZoneMin && targetPosition.y <= shootZoneMax)
+            } else if (targetPosition.y >= shootZoneMin && targetPosition.y <= shootZoneMax && targetPosition.x == xZone)
             {
                 score += 10*chainBoost;
                 if (targetPosition.y < sweetZoneMin)
