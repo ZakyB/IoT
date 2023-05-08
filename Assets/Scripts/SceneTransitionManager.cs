@@ -7,4 +7,16 @@ public class SceneTransitionManager : MonoBehaviour
     {
         SceneManager.LoadScene("Gaming");
     }
+    public void OpenSettings()
+    {
+        
+        SceneManager.LoadScene("NomDeLaSceneDesParametres");
+    }
+    public void OpenScore()
+    {
+        
+        SceneManager.LoadScene("RecordScore");
+    }
+
+   
 }
