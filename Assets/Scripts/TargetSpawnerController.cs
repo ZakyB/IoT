@@ -1,29 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+
+[System.Serializable]
+public class TargetSpawnData
+{
+    public Vector3 position; // La position de spawn de la cible
+    public float spawnDelay; // Le délai avant le prochain spawn
+}
 
 public class TargetSpawnerController : MonoBehaviour
 {
     public GameObject targetPrefab; // Le prefab de la cible à générer
-    public float spawnInterval = 5f; // L'intervalle de temps entre chaque génération de cible
-    public float leftPossibleX = 4f;
-    public float middlePossibleX = 5f;
-    public float rightPossibleX = 6f;
-    public float minY = 1f; // La hauteur minimale de génération de la cible
-    public float maxY = 3f; // La hauteur maximale de génération de la cible
+    public List<TargetSpawnData> targetSpawnDataList; // La liste des données de spawn des cibles
+    public Canvas endGameCanvas;
+    public RectTransform endGamePanel;
+
+    private int currentSpawnIndex = 0; // L'index de spawn actuel
 
     void Start()
     {
-        InvokeRepeating("SpawnTarget", spawnInterval, spawnInterval);
+        // Démarrer la génération de cibles
+        StartCoroutine(SpawnTargets());
     }
 
-    void SpawnTarget()
+    IEnumerator SpawnTargets()
     {
-        float[] possibleX = { leftPossibleX, middlePossibleX, rightPossibleX };
-        float randomX = possibleX[Random.Range(0, possibleX.Length)];
-        float randomY = Random.Range(minY, maxY);
-        Vector3 spawnPosition = new Vector3(randomX, randomY, 0f);
-        Instantiate(targetPrefab, spawnPosition, Quaternion.identity);
+        // Vérifier si la liste des données de spawn est vide
+        if (targetSpawnDataList.Count == 0)
+            yield break;
+
+        // Parcourir la liste des données de spawn
+        for (int i = 0; i < targetSpawnDataList.Count; i++)
+        {
+            // Obtenir les données de spawn pour l'index actuel
+            TargetSpawnData spawnData = targetSpawnDataList[i];
+
+            // Générer une nouvelle cible avec les données de spawn
+            Instantiate(targetPrefab, spawnData.position, Quaternion.identity);
+
+            // Attendre le délai spécifié avant le prochain spawn
+            yield return new WaitForSeconds(spawnData.spawnDelay);
+        }
+
+        // Attendre 4 secondes avant d'activer le canvas de fin de partie
+        yield return new WaitForSeconds(4f);
+
+        // Activer le canvas de fin de partie une fois le délai écoulé
+        endGameCanvas.gameObject.SetActive(true);
+        endGamePanel.DOAnchorPosX(3.5f, 1f);
     }
 }
-

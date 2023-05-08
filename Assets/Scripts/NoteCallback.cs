@@ -7,7 +7,10 @@ using UnityEngine.InputSystem.Layouts;
 
 sealed class NoteCallback : MonoBehaviour
 {
-    void Start()
+    public int noteNumber;
+    private float resetDelay = 0.1f; // Délai de réinitialisation en secondes
+
+    private void Start()
     {
         InputSystem.onDeviceChange += (device, change) =>
         {
@@ -16,31 +19,19 @@ sealed class NoteCallback : MonoBehaviour
             var midiDevice = device as Minis.MidiDevice;
             if (midiDevice == null) return;
 
-            midiDevice.onWillNoteOn += (note, velocity) => {
-                // Note that you can't use note.velocity because the state
-                // hasn't been updated yet (as this is "will" event). The note
-                // object is only useful to specify the target note (note
-                // number, channel number, device name, etc.) Use the velocity
-                // argument as an input note velocity.
-                Debug.Log(string.Format(
-                    "Note On #{0} ({1}) vel:{2:0.00} ch:{3} dev:'{4}'",
-                    note.noteNumber,
-                    note.shortDisplayName,
-                    velocity,
-                    (note.device as Minis.MidiDevice)?.channel,
-                    note.device.description.product
-                ));
-            };
+            midiDevice.onWillNoteOn += (note, velocity) =>
+            {
+                noteNumber = note.noteNumber;
+                Debug.Log(noteNumber);
 
-            midiDevice.onWillNoteOff += (note) => {
-                Debug.Log(string.Format(
-                    "Note Off #{0} ({1}) ch:{2} dev:'{3}'",
-                    note.noteNumber,
-                    note.shortDisplayName,
-                    (note.device as Minis.MidiDevice)?.channel,
-                    note.device.description.product
-                ));
+                StartCoroutine(ResetNoteNumber());
             };
         };
+    }
+
+    private System.Collections.IEnumerator ResetNoteNumber()
+    {
+        yield return new WaitForSeconds(resetDelay);
+        noteNumber = 0;
     }
 }
