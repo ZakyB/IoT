@@ -197,7 +197,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &585446281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,10 +541,10 @@ RectTransform:
   m_Father: {fileID: 585446284}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 3.499939, y: 0}
-  m_SizeDelta: {x: -7, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 20, y: 0}
+  m_SizeDelta: {x: 13, y: 11}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1092976576
 MonoBehaviour:
@@ -639,6 +639,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: TargetSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 4308494172872740311, guid: f2a1b3af05a53d346aef76c3761e4564, type: 3}
+      propertyPath: endGamePanel
+      value: 
+      objectReference: {fileID: 1092976575}
+    - target: {fileID: 4308494172872740311, guid: f2a1b3af05a53d346aef76c3761e4564, type: 3}
+      propertyPath: endGameCanvas
+      value: 
+      objectReference: {fileID: 585446283}
     - target: {fileID: 4308494172872740311, guid: f2a1b3af05a53d346aef76c3761e4564, type: 3}
       propertyPath: leftPossibleX
       value: 3

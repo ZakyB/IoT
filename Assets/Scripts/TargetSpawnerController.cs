@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 [System.Serializable]
 public class TargetSpawnData
@@ -13,6 +14,8 @@ public class TargetSpawnerController : MonoBehaviour
 {
     public GameObject targetPrefab; // Le prefab de la cible à générer
     public List<TargetSpawnData> targetSpawnDataList; // La liste des données de spawn des cibles
+    public Canvas endGameCanvas;
+    public RectTransform endGamePanel;
 
     private int currentSpawnIndex = 0; // L'index de spawn actuel
 
@@ -40,5 +43,12 @@ public class TargetSpawnerController : MonoBehaviour
             // Attendre le délai spécifié avant le prochain spawn
             yield return new WaitForSeconds(spawnData.spawnDelay);
         }
+
+        // Attendre 4 secondes avant d'activer le canvas de fin de partie
+        yield return new WaitForSeconds(4f);
+
+        // Activer le canvas de fin de partie une fois le délai écoulé
+        endGameCanvas.gameObject.SetActive(true);
+        endGamePanel.DOAnchorPosX(3.5f, 1f);
     }
 }

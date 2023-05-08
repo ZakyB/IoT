@@ -17,16 +17,10 @@ sealed class NoteCallback : MonoBehaviour
             if (change != InputDeviceChange.Added) return;
 
             var midiDevice = device as Minis.MidiDevice;
-            if (midiDevice == null){
-                Debug.Log("pouet");
-                return;
-            } else {
-                Debug.Log("prout");
-            }
+            if (midiDevice == null) return;
 
             midiDevice.onWillNoteOn += (note, velocity) =>
             {
-                Debug.Log("prout");
                 noteNumber = note.noteNumber;
                 Debug.Log(noteNumber);
 

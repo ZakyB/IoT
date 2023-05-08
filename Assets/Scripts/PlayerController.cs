@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         int xZone = GetXZoneFromArduino();
-        Debug.Log(xZone);
 
         if (canShoot && xZone != 0)
         {
