@@ -16,39 +16,40 @@ public class TargetSpawnerController : MonoBehaviour
     public List<TargetSpawnData> targetSpawnDataList; // La liste des données de spawn des cibles
     public Canvas endGameCanvas;
     public RectTransform endGamePanel;
+    public EndMenuController endMenuController; // Référence au EndMenuController
+    public int targetCount = 0;
 
     private int currentSpawnIndex = 0; // L'index de spawn actuel
 
     void Start()
     {
         // Démarrer la génération de cibles
+        targetCount = targetSpawnDataList.Count;
+        Debug.Log("Nombre total de cibles : " + targetCount);
         StartCoroutine(SpawnTargets());
     }
 
     IEnumerator SpawnTargets()
     {
-        // Vérifier si la liste des données de spawn est vide
-        if (targetSpawnDataList.Count == 0)
-            yield break;
-
         // Parcourir la liste des données de spawn
         for (int i = 0; i < targetSpawnDataList.Count; i++)
         {
-            // Obtenir les données de spawn pour l'index actuel
-            TargetSpawnData spawnData = targetSpawnDataList[i];
-
             // Générer une nouvelle cible avec les données de spawn
-            Instantiate(targetPrefab, spawnData.position, Quaternion.identity);
+            Instantiate(targetPrefab, targetSpawnDataList[i].position, Quaternion.identity);
 
             // Attendre le délai spécifié avant le prochain spawn
-            yield return new WaitForSeconds(spawnData.spawnDelay);
+            yield return new WaitForSeconds(targetSpawnDataList[i].spawnDelay);
         }
 
-        // Attendre 4 secondes avant d'activer le canvas de fin de partie
-        yield return new WaitForSeconds(4f);
+        // Appeler la méthode appropriée dans EndMenuController après un délai de 4 secondes
+        Invoke("ShowEndMenu", 4f);
+    }
 
-        // Activer le canvas de fin de partie une fois le délai écoulé
+    void ShowEndMenu()
+    {
+        // Appeler la méthode appropriée dans EndMenuController
         endGameCanvas.gameObject.SetActive(true);
-        endGamePanel.DOAnchorPosX(3.5f, 1f);
+        endMenuController.ShowEndMenu();
+        endGamePanel.DOAnchorPosX(3f, 1f);  
     }
 }

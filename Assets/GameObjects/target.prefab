@@ -99,3 +99,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPositionY: -4.5
   speed: 2
+  playerController: {fileID: 7810095969542218530, guid: df2a43efe6ab32c4aac14c64fdff1d72, type: 3}

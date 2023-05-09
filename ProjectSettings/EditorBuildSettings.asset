@@ -15,6 +15,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 59cf9e8a96b70804f9f90fe64a827e9f
   - enabled: 1
-    path: Assets/Scenes/Gaming.unity
+    path: Assets/Scenes/FewDollars.unity
     guid: 5676fb6da9b46634da86749841bcb7e1
+  - enabled: 1
+    path: Assets/Scenes/Mario.unity
+    guid: 62df06e4758817c4c98a24a046a17305
+  - enabled: 1
+    path: Assets/Scenes/Entertainer.unity
+    guid: 7da65eee63601b74a8b44426b38c63be
   m_configObjects: {}

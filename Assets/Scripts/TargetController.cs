@@ -11,6 +11,8 @@ public class TargetController : MonoBehaviour
     private float journeyLength; // la distance totale que la cible doit parcourir
     private float startTime; // le moment où la cible commence à se déplacer
 
+    public PlayerController playerController;
+
     void Start()
     {
         // initialise les positions de départ et d'arrivée de la cible
@@ -37,11 +39,5 @@ public class TargetController : MonoBehaviour
 
         // déplace la cible progressivement en utilisant la fonction Lerp
         transform.position = Vector3.Lerp(startPosition, targetPosition, fractionOfJourney);
-
-        if (transform.position.y <= targetPositionY)
-        {
-            // détruit la cible
-            Destroy(gameObject);
-        }
     }
 }
